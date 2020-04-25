@@ -44,5 +44,5 @@ while True:
             large_image="browser",
         )
     except Exception:
-        log.warning('Skipping update due to process closing.')
+        log.warning('Skipping update due to a process dying.')
     time.sleep(15)
