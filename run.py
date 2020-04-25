@@ -22,6 +22,7 @@ def find_process(name):
 
 
 def get_memory_usage(process):
+    """Adds up all found process memory usage and converts it to human-readable units."""
     info = sum(p.memory_info().rss for p in process)
     usage = humanize.naturalsize(info)
     return usage
