@@ -2,7 +2,7 @@
 Microsoft Edge (Chromium-based) Discord RPC.
 
 # To Do
-[] figure out a way to get number of tabs/windows open
+- [ ] figure out a way to get number of tabs/windows open
 
 # Installing
 Requirements:
