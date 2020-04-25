@@ -37,10 +37,12 @@ while True:
         log.info(f"Found {len(process)} processes")
     except Exception:
         log.critical("No processes found. Exiting")
-    if process is not None:
+    try:
         rpc.update(
             details="<placeholder> tabs open",
             state=f"Using {get_memory_usage(process)} of RAM",
             large_image="browser",
         )
+    except Exception:
+        log.warning('Skipping update due to process closing.')
     time.sleep(15)

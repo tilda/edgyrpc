@@ -1,0 +1,6 @@
+{
+    "name": "edgyrpc companion",
+    "version": "1.0",
+    "description": "Allows edgyrpc to access number of tabs/windows.",
+    "manifest_version": 2
+}
