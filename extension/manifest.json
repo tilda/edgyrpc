@@ -2,5 +2,11 @@
     "name": "edgyrpc companion",
     "version": "1.0",
     "description": "Allows edgyrpc to access number of tabs/windows.",
+    "icons": {
+        "16": "images/16.png",
+        "32": "images/32.png",
+        "48": "images/48.png",
+        "128": "images/128.png"
+    },
     "manifest_version": 2
 }
