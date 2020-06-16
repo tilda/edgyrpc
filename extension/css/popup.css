@@ -1,0 +1,26 @@
+body {
+    height: 200px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.container {
+    object-position: center;
+    text-align: center;
+}
+
+.facolors-online {
+    color: #8fbcbb;
+}
+
+.facolors-offline {
+    color: #bf616a;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    display: inline-block;
+}
