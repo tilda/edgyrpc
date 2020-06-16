@@ -14,3 +14,6 @@ websockets = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+rpc = "python run.py"
