@@ -5,10 +5,11 @@
 
 import psutil
 from pypresence import Presence
-import time
 import humanize
 from logbook import Logger, StreamHandler
 import sys
+import websockets
+import asyncio
 
 StreamHandler(sys.stdout).push_application()
 log = Logger("edgyrpc")
@@ -27,22 +28,32 @@ def get_memory_usage(process):
     usage = humanize.naturalsize(info)
     return usage
 
+rpc.connect()
+
+async def main(ws, path):
+    while True:
+        tabs = await ws.recv()
+        log.info(f'Received: {tabs} tabs')
+        try:
+            process = find_process("msedge.exe")
+            log.info(f'Found {len(process)} processes')
+        except Exception:
+            log.exception('Something happened?')
+        try:
+            rpc.update(
+                details=f'{tabs} tabs open',
+                state=f'Using {get_memory_usage(process)} of RAM',
+                large_image="browser"
+            )
+        except:
+            pass # shove ur error up ur ugly ass
+
+        await ws.send('OK')
 
 rpc.connect()
 
+socket = websockets.serve(main, "localhost", 3233)
 
-while True:
-    try:
-        process = find_process("msedge.exe")
-        log.info(f"Found {len(process)} processes")
-    except Exception:
-        log.critical("No processes found. Exiting")
-    try:
-        rpc.update(
-            details="<placeholder> tabs open",
-            state=f"Using {get_memory_usage(process)} of RAM",
-            large_image="browser",
-        )
-    except Exception:
-        log.warning('Skipping update due to a process dying.')
-    time.sleep(15)
+loop = asyncio.get_event_loop()
+loop.run_until_complete(socket)
+loop.run_forever()

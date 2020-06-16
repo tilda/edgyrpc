@@ -8,5 +8,10 @@
         "48": "images/48.png",
         "128": "images/128.png"
     },
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": ["alarms"],
     "manifest_version": 2
 }
