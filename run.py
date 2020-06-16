@@ -16,6 +16,7 @@ log = Logger("edgyrpc")
 client_id = "703425123570548746"
 rpc = Presence(client_id)
 
+rpc.connect()
 
 def find_process(name):
     """Returns a list of processes matching the argument `name`"""
@@ -28,12 +29,13 @@ def get_memory_usage(process):
     usage = humanize.naturalsize(info)
     return usage
 
-rpc.connect()
-
 async def main(ws, path):
     while True:
-        tabs = await ws.recv()
-        log.info(f'Received: {tabs} tabs')
+        try:
+            tabs = await ws.recv()
+            log.info(f'Received: {tabs} tabs')
+        except websockets.exceptions.ConnectionClosedOK:
+            pass # why is this an error
         try:
             process = find_process("msedge.exe")
             log.info(f'Found {len(process)} processes')
@@ -41,7 +43,7 @@ async def main(ws, path):
             log.exception('Something happened?')
         try:
             rpc.update(
-                details=f'{tabs} tabs open',
+                details=f'{tabs} tab{"s" if tabs > 1 else ""} open',
                 state=f'Using {get_memory_usage(process)} of RAM',
                 large_image="browser"
             )
@@ -50,10 +52,9 @@ async def main(ws, path):
 
         await ws.send('OK')
 
-rpc.connect()
-
 socket = websockets.serve(main, "localhost", 3233)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(socket)
+log.info("Starting...")
 loop.run_forever()

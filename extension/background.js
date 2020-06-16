@@ -12,6 +12,10 @@ function getTabs() {
 
 chrome.runtime.onInstalled.addListener(function() {
     getTabs()
+    globalThis.ws = new WebSocket("ws://localhost:3233")
+    ws.onopen = function () {
+        ws.send(globalThis.tabs)
+    }
     chrome.alarms.create("jsdklgjsiofjd", {
         "periodInMinutes": 1
     })
@@ -19,8 +23,5 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.alarms.onAlarm.addListener(function() {
     getTabs()
-    var ws = new WebSocket("ws://localhost:3233")
-    ws.onopen = function () {
-        ws.send(globalThis.tabs)
-    }
+    globalThis.ws.send(globalThis.tabs)
 })
