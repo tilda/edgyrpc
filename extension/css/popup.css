@@ -9,12 +9,16 @@ body {
     text-align: center;
 }
 
-.facolors-online {
-    color: #8fbcbb;
+.colors-online {
+    color: #a3be8c;
 }
 
-.facolors-offline {
+.colors-offline {
     color: #bf616a;
+}
+
+.colors-connecting {
+    color: #ebcb8b;
 }
 
 .dot {
