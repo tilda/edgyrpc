@@ -1,6 +1,8 @@
 # edgyrpc
 Microsoft Edge (Chromium-based) Discord RPC.
 
+![](assets/DiscordCanary_zPYYRNjuIW.png)
+
 # Installing
 Requirements:
 - Python 3.6+
