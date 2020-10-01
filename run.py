@@ -14,7 +14,8 @@ import asyncio
 StreamHandler(sys.stdout).push_application()
 log = Logger("edgyrpc")
 client_id = "703425123570548746"
-rpc = Presence(client_id)
+loop = asyncio.get_event_loop()
+rpc = Presence(client_id, loop=loop)
 
 rpc.connect()
 
@@ -43,7 +44,7 @@ async def main(ws, path):
             log.exception('Something happened?')
         try:
             rpc.update(
-                details=f'{tabs} tab{"s" if tabs > 1 else ""} open',
+                details=f'{tabs} tab{"s" if int(tabs) > 1 else ""} open',
                 state=f'Using {get_memory_usage(process)} of RAM',
                 large_image="browser"
             )
@@ -54,7 +55,6 @@ async def main(ws, path):
 
 socket = websockets.serve(main, "localhost", 3233)
 
-loop = asyncio.get_event_loop()
 loop.run_until_complete(socket)
 log.info("Starting...")
 loop.run_forever()
